@@ -28,6 +28,15 @@ Dán 1 đoạn trích xuất log tiêu biểu từ file `docs/trace_waterfall.js
 [
   {
     "step": 1,
+    "query": "Chào bạn, bạn có thể giới thiệu cách trợ lý quản lý tiến độ ứng tuyển và lên lịch phỏng vấn hoạt động không?",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Đây là câu hỏi giới thiệu chung, không cần gọi Tool.",
+    "output": "Smart Job Application Agent theo dõi hồ sơ ứng tuyển, cập nhật trạng thái Kanban và hỗ trợ đặt lịch phỏng vấn.",
+    "latency_ms": 1357.44
+  },
+  {
+    "step": 1,
+    "query": "Hãy tra cứu trạng thái hồ sơ ứng tuyển của tôi tại công ty Vingroup.",
     "action_type": "TOOL_EXECUTION",
     "tool_name": "search_job_status",
     "arguments": {
@@ -42,10 +51,63 @@ Dán 1 đoạn trích xuất log tiêu biểu từ file `docs/trace_waterfall.js
         "current_status": "To Apply"
       }
     },
-    "latency_ms": 245.2
+    "latency_ms": 1171.16
   },
   {
     "step": 2,
+    "query": "Hãy tra cứu trạng thái hồ sơ ứng tuyển của tôi tại công ty Vingroup.\n\nObservation từ tool search_job_status: {\"status\": \"SUCCESS\", \"data\": {\"job_id\": \"JOB-VINGROUP-001\", \"role\": \"Data Analyst\", \"current_status\": \"To Apply\"}}\nHãy tiếp tục suy luận. Nếu đã đủ dữ liệu, trả lời bằng văn bản trực tiếp.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Đã nhận kết quả tra cứu và có thể trả lời trực tiếp.",
+    "output": "Hồ sơ Vingroup là vị trí Data Analyst, trạng thái hiện tại là To Apply.",
+    "latency_ms": 957.21
+  },
+  {
+    "step": 1,
+    "query": "Hãy đặt lịch phỏng vấn vị trí Data Analyst tại Vingroup vào lúc 14:00 ngày 18/09/2026.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "schedule_interview_calendar",
+    "arguments": {
+      "title": "Phỏng vấn Data Analyst - Vingroup",
+      "time": "2026-09-18T14:00:00"
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "event_link": "https://calendar.google.com/calendar/event?eid=mock_link",
+      "title": "Phỏng vấn Data Analyst - Vingroup",
+      "time": "2026-09-18T14:00:00"
+    },
+    "latency_ms": 795.77
+  },
+  {
+    "step": 2,
+    "query": "Hãy đặt lịch phỏng vấn vị trí Data Analyst tại Vingroup vào lúc 14:00 ngày 18/09/2026.\n\nObservation từ tool schedule_interview_calendar: {\"status\": \"SUCCESS\", \"event_link\": \"https://calendar.google.com/calendar/event?eid=mock_link\", \"title\": \"Phỏng vấn Data Analyst - Vingroup\", \"time\": \"2026-09-18T14:00:00\"}\nHãy tiếp tục suy luận. Nếu đã đủ dữ liệu, trả lời bằng văn bản trực tiếp.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Chuỗi xử lý ứng tuyển đã hoàn tất.",
+    "output": "Đã đặt lịch phỏng vấn Data Analyst tại Vingroup vào 14:00 ngày 18/09/2026.",
+    "latency_ms": 917.09
+  },
+  {
+    "step": 1,
+    "query": "Hãy xử lý hồ sơ ứng tuyển Data Analyst của tôi tại Vingroup: tra cứu trạng thái, chuyển hồ sơ sang Interviewing nếu phù hợp, rồi đặt lịch phỏng vấn lúc 14:00 ngày 18/09/2026.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "search_job_status",
+    "arguments": {
+      "company": "Vingroup",
+      "student_id": "2A202602835"
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "data": {
+        "job_id": "JOB-VINGROUP-001",
+        "role": "Data Analyst",
+        "current_status": "To Apply"
+      }
+    },
+    "latency_ms": 944.42
+  },
+  {
+    "step": 2,
+    "query": "Hãy xử lý hồ sơ ứng tuyển Data Analyst của tôi tại Vingroup: tra cứu trạng thái, chuyển hồ sơ sang Interviewing nếu phù hợp, rồi đặt lịch phỏng vấn lúc 14:00 ngày 18/09/2026.\n\nObservation từ tool search_job_status: {\"status\": \"SUCCESS\", \"data\": {\"job_id\": \"JOB-VINGROUP-001\", \"role\": \"Data Analyst\", \"current_status\": \"To Apply\"}}\nHãy tiếp tục suy luận. Nếu đã đủ dữ liệu, trả lời bằng văn bản trực tiếp.",
     "action_type": "TOOL_EXECUTION",
     "tool_name": "update_application_kanban",
     "arguments": {
@@ -56,10 +118,11 @@ Dán 1 đoạn trích xuất log tiêu biểu từ file `docs/trace_waterfall.js
       "status": "SUCCESS",
       "message": "Job status updated to 'Interviewing'"
     },
-    "latency_ms": 310.8
+    "latency_ms": 811.89
   },
   {
     "step": 3,
+    "query": "Hãy xử lý hồ sơ ứng tuyển Data Analyst của tôi tại Vingroup: tra cứu trạng thái, chuyển hồ sơ sang Interviewing nếu phù hợp, rồi đặt lịch phỏng vấn lúc 14:00 ngày 18/09/2026.\n\nObservation từ tool update_application_kanban: {\"status\": \"SUCCESS\", \"message\": \"Job status updated to 'Interviewing'\"}\nHãy tiếp tục suy luận. Nếu đã đủ dữ liệu, trả lời bằng văn bản trực tiếp.",
     "action_type": "TOOL_EXECUTION",
     "tool_name": "schedule_interview_calendar",
     "arguments": {
@@ -68,9 +131,42 @@ Dán 1 đoạn trích xuất log tiêu biểu từ file `docs/trace_waterfall.js
     },
     "observation": {
       "status": "SUCCESS",
-      "event_link": "https://calendar.google.com/calendar/event?eid=mock_link"
+      "event_link": "https://calendar.google.com/calendar/event?eid=mock_link",
+      "title": "Phỏng vấn Data Analyst - Vingroup",
+      "time": "2026-09-18T14:00:00"
     },
-    "latency_ms": 405.1
+    "latency_ms": 819.56
+  },
+  {
+    "step": 4,
+    "query": "Hãy xử lý hồ sơ ứng tuyển Data Analyst của tôi tại Vingroup: tra cứu trạng thái, chuyển hồ sơ sang Interviewing nếu phù hợp, rồi đặt lịch phỏng vấn lúc 14:00 ngày 18/09/2026.\n\nObservation từ tool schedule_interview_calendar: {\"status\": \"SUCCESS\", \"event_link\": \"https://calendar.google.com/calendar/event?eid=mock_link\", \"title\": \"Phỏng vấn Data Analyst - Vingroup\", \"time\": \"2026-09-18T14:00:00\"}\nHãy tiếp tục suy luận. Nếu đã đủ dữ liệu, trả lời bằng văn bản trực tiếp.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Chuỗi xử lý ứng tuyển đã hoàn tất.",
+    "output": "Đã cập nhật hồ sơ sang Interviewing và đặt lịch phỏng vấn Data Analyst tại Vingroup vào 14:00 ngày 18/09/2026.",
+    "latency_ms": 955.79
+  },
+  {
+    "step": 1,
+    "query": "Hãy tra cứu trạng thái hồ sơ ứng tuyển của tôi tại công ty Không Tồn Tại.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "search_job_status",
+    "arguments": {
+      "company": "Không Tồn Tại",
+      "student_id": "2A202602835"
+    },
+    "observation": {
+      "status": "NOT_FOUND",
+      "message": "Không tìm thấy hồ sơ ứng tuyển của sinh viên 2A202602835 tại công ty Không Tồn Tại."
+    },
+    "latency_ms": 894.89
+  },
+  {
+    "step": 2,
+    "query": "Hãy tra cứu trạng thái hồ sơ ứng tuyển của tôi tại công ty Không Tồn Tại.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Dừng vì Tool trả về NOT_FOUND.",
+    "output": "Không tìm thấy hồ sơ ứng tuyển của sinh viên 2A202602835 tại công ty Không Tồn Tại.",
+    "latency_ms": 10.0
   }
 ]
 ```

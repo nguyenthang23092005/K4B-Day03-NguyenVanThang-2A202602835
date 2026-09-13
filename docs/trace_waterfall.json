@@ -5,7 +5,7 @@
     "action_type": "FINAL_ANSWER",
     "thought": "Đây là câu hỏi giới thiệu chung, không cần gọi Tool.",
     "output": "Smart Job Application Agent theo dõi hồ sơ ứng tuyển, cập nhật trạng thái Kanban và hỗ trợ đặt lịch phỏng vấn.",
-    "latency_ms": 1377.37
+    "latency_ms": 1357.44
   },
   {
     "step": 1,
@@ -24,7 +24,7 @@
         "current_status": "To Apply"
       }
     },
-    "latency_ms": 961.17
+    "latency_ms": 1171.16
   },
   {
     "step": 2,
@@ -32,7 +32,7 @@
     "action_type": "FINAL_ANSWER",
     "thought": "Đã nhận kết quả tra cứu và có thể trả lời trực tiếp.",
     "output": "Hồ sơ Vingroup là vị trí Data Analyst, trạng thái hiện tại là To Apply.",
-    "latency_ms": 882.45
+    "latency_ms": 957.21
   },
   {
     "step": 1,
@@ -49,7 +49,7 @@
       "title": "Phỏng vấn Data Analyst - Vingroup",
       "time": "2026-09-18T14:00:00"
     },
-    "latency_ms": 829.37
+    "latency_ms": 795.77
   },
   {
     "step": 2,
@@ -57,7 +57,7 @@
     "action_type": "FINAL_ANSWER",
     "thought": "Chuỗi xử lý ứng tuyển đã hoàn tất.",
     "output": "Đã đặt lịch phỏng vấn Data Analyst tại Vingroup vào 14:00 ngày 18/09/2026.",
-    "latency_ms": 867.72
+    "latency_ms": 917.09
   },
   {
     "step": 1,
@@ -76,7 +76,7 @@
         "current_status": "To Apply"
       }
     },
-    "latency_ms": 776.24
+    "latency_ms": 944.42
   },
   {
     "step": 2,
@@ -91,7 +91,7 @@
       "status": "SUCCESS",
       "message": "Job status updated to 'Interviewing'"
     },
-    "latency_ms": 989.83
+    "latency_ms": 811.89
   },
   {
     "step": 3,
@@ -108,7 +108,7 @@
       "title": "Phỏng vấn Data Analyst - Vingroup",
       "time": "2026-09-18T14:00:00"
     },
-    "latency_ms": 839.84
+    "latency_ms": 819.56
   },
   {
     "step": 4,
@@ -116,7 +116,7 @@
     "action_type": "FINAL_ANSWER",
     "thought": "Chuỗi xử lý ứng tuyển đã hoàn tất.",
     "output": "Đã cập nhật hồ sơ sang Interviewing và đặt lịch phỏng vấn Data Analyst tại Vingroup vào 14:00 ngày 18/09/2026.",
-    "latency_ms": 1032.58
+    "latency_ms": 955.79
   },
   {
     "step": 1,
@@ -131,7 +131,7 @@
       "status": "NOT_FOUND",
       "message": "Không tìm thấy hồ sơ ứng tuyển của sinh viên 2A202602835 tại công ty Không Tồn Tại."
     },
-    "latency_ms": 783.66
+    "latency_ms": 894.89
   },
   {
     "step": 2,
