@@ -39,14 +39,12 @@ class MCPJobApplicationServer:
             "tool": tool_name,
             "result": content
         }
-
-
 if __name__ == "__main__":
     print("==========================================================")
     print("🔌 KIỂM THỬ ĐỘC LẬP MCP SERVER (smart-job-application-mcp-server)")
     print("==========================================================")
     
-    server = MCPAcademicServer()
+    server = MCPJobApplicationServer()
     tools = server.list_tools()
     print(f"✅ Khởi tạo thành công MCP Server: {server.server_name} (Version: {server.version})")
     print(f"📦 Số lượng Tools công bố: {len(tools)}")
@@ -60,6 +58,3 @@ if __name__ == "__main__":
     else:
         print("✅ [MCP CHECK]: Test dispatch tool 'search_job_status' thành công:")
         print(f"   Phản hồi JSON-RPC: {json.dumps(test_result, ensure_ascii=False)}")
-
-
-    MCPAcademicServer = MCPJobApplicationServer
