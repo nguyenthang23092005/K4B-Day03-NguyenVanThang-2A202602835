@@ -175,7 +175,7 @@ Dán 1 đoạn trích xuất log tiêu biểu từ file `docs/trace_waterfall.js
 
 ## 3. TỔNG KẾT KẾT QUẢ NGHIỆM THU & NỘP BÀI
 
-- [ ] Đã xác nhận Agent chạy trên LLM API thật (Gemini/OpenAI).
+- [X] Đã xác nhận Agent chạy trên LLM API thật (Gemini/OpenAI).
 - **Tổng số Test Cases đã chạy thành công ở lần kiểm tra hiện tại:** 5 / 5 test cases (Mock Provider).
 - **Số lượt gọi Tool trong TC04:** 3 lượt; toàn bộ 5 test cases hiện tạo 6 lượt gọi Tool.
 - **Kết quả đẩy Repo nộp bài:** [x] Đã Commit và Push mã nguồn thành công lên GitHub cá nhân.
