@@ -11,41 +11,58 @@ from typing import Dict, Any
 # ==============================================================================
 
 TOOLS_SCHEMA = [
-    # Tool 1: Đã được định nghĩa mẫu sẵn cho Học viên tham khảo
     {
-        "name": "academic_query",
-        "description": "Tra cứu hồ sơ và thông tin học vụ của sinh viên VinUni bằng mã sinh viên.",
+        "name": "search_job_status",
+        "description": "Tra cứu trạng thái hồ sơ ứng tuyển của sinh viên theo công ty.",
         "parameters": {
             "type": "object",
             "properties": {
+                "company": {
+                    "type": "string",
+                    "description": "Tên công ty cần tra cứu"
+                },
                 "student_id": {
                     "type": "string",
-                    "description": "Mã sinh viên cần tra cứu (ví dụ: 'SV2026001')"
+                    "description": "Mã sinh viên cần tra cứu"
                 }
             },
-            "required": ["student_id"]
+            "required": ["company", "student_id"]
         }
     },
-    
-    # --------------------------------------------------------------------------
-    # TODO 1.2: HỌC VIÊN HOÀN THIỆN TOOL SCHEMA CHO 'schedule_appointment'
-    # 🎯 YÊU CẦU THIẾT KẾ SCHEMA (JSON SCHEMA STANDARD):
-    # 1. Tool dùng để đặt lịch hẹn tư vấn học vụ với Cố vấn học tập VinUni.
-    # 2. Thiết kế các tham số (properties) để LLM trích xuất:
-    #    - student_id (string): Mã sinh viên cần đặt lịch (ví dụ: 'SV2026001')
-    #    - datetime_str (string): Thời gian hẹn (ví dụ: '14:00 15/09/2026')
-    #    - advisor_name (string): Tên cố vấn học tập
-    # 3. Khai báo danh sách các trường bắt buộc (required).
-    # --------------------------------------------------------------------------
     {
-        "name": "schedule_appointment",
-        "description": "Đặt lịch hẹn tư vấn học vụ với Cố vấn học tập VinUni.",
+        "name": "update_application_kanban",
+        "description": "Cập nhật trạng thái hồ sơ ứng tuyển trên Kanban.",
         "parameters": {
             "type": "object",
             "properties": {
-                # TODO 1.2: Khai báo các thuộc tính tham số cho Tool tại đây...
+                "job_id": {
+                    "type": "string",
+                    "description": "Mã hồ sơ ứng tuyển"
+                },
+                "status": {
+                    "type": "string",
+                    "description": "Trạng thái mới của hồ sơ, ví dụ 'Interviewing'"
+                }
             },
-            "required": [] # TODO 1.2: Khai báo danh sách các trường bắt buộc tại đây...
+            "required": ["job_id", "status"]
+        }
+    },
+    {
+        "name": "schedule_interview_calendar",
+        "description": "Đặt lịch phỏng vấn trên lịch cá nhân.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "description": "Tiêu đề cuộc phỏng vấn"
+                },
+                "time": {
+                    "type": "string",
+                    "description": "Thời gian phỏng vấn theo ISO 8601"
+                }
+            },
+            "required": ["title", "time"]
         }
     }
 ]
@@ -54,58 +71,59 @@ TOOLS_SCHEMA = [
 # 2. MÔ PHỎNG DỮ LIỆU & HÀM THỰC THI TOOL (EXECUTION LAYER)
 # ==============================================================================
 
-MOCK_DATABASE = {
-    "SV2026001": {
-        "full_name": "Nguyễn Văn An",
-        "class": "AI-K4",
-        "gpa": 3.85,
-        "email": "an.nv@vinuni.edu.vn",
-        "status": "Đang học",
-        "advisor": "PGS.TS Nguyễn Văn A"
-    },
-    "SV2026002": {
-        "full_name": "Trần Thị Bình",
-        "class": "AI-K4",
-        "gpa": 3.60,
-        "email": "binh.tt@vinuni.edu.vn",
-        "status": "Đang học",
-        "advisor": "TS. Lê Thị B"
+JOB_APPLICATIONS = {
+    ("VINGROUP", "2A202602835"): {
+        "job_id": "JOB-VINGROUP-001",
+        "role": "Data Analyst",
+        "current_status": "To Apply"
     }
 }
 
 
-def execute_academic_query(student_id: str) -> str:
-    """Thực thi tra cứu học vụ theo mã sinh viên"""
-    student = MOCK_DATABASE.get(student_id.strip().upper())
-    if student:
+def execute_search_job_status(company: str, student_id: str) -> str:
+    """Tra cứu hồ sơ ứng tuyển theo công ty và mã sinh viên."""
+    application = JOB_APPLICATIONS.get((company.strip().upper(), student_id.strip().upper()))
+    if application:
         return json.dumps({
             "status": "SUCCESS",
-            "student_id": student_id,
-            "data": student
+            "data": application
         }, ensure_ascii=False)
-    else:
-        return json.dumps({
-            "status": "NOT_FOUND",
-            "message": f"Không tìm thấy dữ liệu sinh viên có mã '{student_id}'"
-        }, ensure_ascii=False)
+    return json.dumps({
+        "status": "NOT_FOUND",
+        "message": f"Không tìm thấy hồ sơ ứng tuyển của sinh viên {student_id} tại công ty {company}."
+    }, ensure_ascii=False)
 
 
-def execute_schedule_appointment(student_id: str, datetime_str: str, advisor_name: str = "PGS.TS Nguyễn Văn A") -> str:
-    """Thực thi đặt lịch hẹn tư vấn học vụ"""
+def execute_update_application_kanban(job_id: str, status: str) -> str:
+    """Cập nhật trạng thái hồ sơ ứng tuyển."""
+    for application in JOB_APPLICATIONS.values():
+        if application["job_id"] == job_id:
+            application["current_status"] = status
+            return json.dumps({
+                "status": "SUCCESS",
+                "message": f"Job status updated to '{status}'"
+            }, ensure_ascii=False)
+    return json.dumps({
+        "status": "NOT_FOUND",
+        "message": f"Không tìm thấy hồ sơ có mã '{job_id}'."
+    }, ensure_ascii=False)
+
+
+def execute_schedule_interview_calendar(title: str, time: str) -> str:
+    """Tạo lịch phỏng vấn trên lịch cá nhân."""
     return json.dumps({
         "status": "SUCCESS",
-        "booking_id": f"BK-{student_id}-99",
-        "student_id": student_id,
-        "datetime": datetime_str,
-        "advisor": advisor_name,
-        "message": f"Đặt lịch thành công cho sinh viên {student_id} với {advisor_name} vào lúc {datetime_str}."
+        "event_link": "https://calendar.google.com/calendar/event?eid=mock_link",
+        "title": title,
+        "time": time
     }, ensure_ascii=False)
 
 
 # Router gọi tool thực tế
 TOOL_ROUTER = {
-    "academic_query": execute_academic_query,
-    "schedule_appointment": execute_schedule_appointment
+    "search_job_status": execute_search_job_status,
+    "update_application_kanban": execute_update_application_kanban,
+    "schedule_interview_calendar": execute_schedule_interview_calendar
 }
 
 def dispatch_tool_call(tool_name: str, arguments: Dict[str, Any]) -> str:
@@ -116,3 +134,23 @@ def dispatch_tool_call(tool_name: str, arguments: Dict[str, Any]) -> str:
         except Exception as e:
             return json.dumps({"status": "EXECUTION_ERROR", "error": str(e)}, ensure_ascii=False)
     return json.dumps({"status": "UNKNOWN_TOOL", "error": f"Tool '{tool_name}' không tồn tại!"}, ensure_ascii=False)
+
+
+if __name__ == "__main__":
+    required_tools = {
+        "search_job_status",
+        "update_application_kanban",
+        "schedule_interview_calendar"
+    }
+    registered_tools = {tool["name"] for tool in TOOLS_SCHEMA}
+    if required_tools.issubset(registered_tools):
+        print("✅ [TOOLS CHECK]: Đã đăng ký thành công 3 Native Tools tuyển dụng!")
+
+    result = json.loads(dispatch_tool_call(
+        "search_job_status",
+        {"company": "Vingroup", "student_id": "2A202602835"}
+    ))
+    print(
+        f"🧪 Kết quả gọi thử search_job_status: Status {result.get('status')} "
+        f"(Job ID {result.get('data', {}).get('job_id', 'N/A')})"
+    )

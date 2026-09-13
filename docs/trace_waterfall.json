@@ -1,29 +1,144 @@
 [
   {
     "step": 1,
-    "query": "Chào bạn, bạn có thể giới thiệu quy chế học vụ cơ bản của Đại học VinUni không?",
+    "query": "Chào bạn, bạn có thể giới thiệu cách trợ lý quản lý tiến độ ứng tuyển và lên lịch phỏng vấn hoạt động không?",
     "action_type": "FINAL_ANSWER",
-    "thought": "Câu hỏi chung về quy chế học vụ, trả lời trực tiếp không cần gọi Tool.",
-    "output": "[Mock Agent Response]: Xin chào! Quy chế học vụ VinUni yêu cầu sinh viên tích lũy tối thiểu 120 tín chỉ và duy trì GPA trên 2.0 để tốt nghiệp.",
-    "latency_ms": 2845.93
+    "thought": "Đây là câu hỏi giới thiệu chung, không cần gọi Tool.",
+    "output": "Smart Job Application Agent theo dõi hồ sơ ứng tuyển, cập nhật trạng thái Kanban và hỗ trợ đặt lịch phỏng vấn.",
+    "latency_ms": 1377.37
   },
   {
     "step": 1,
-    "query": "Hãy tra cứu thông tin học vụ của sinh viên SV2026001.",
+    "query": "Hãy tra cứu trạng thái hồ sơ ứng tuyển của tôi tại công ty Vingroup.",
     "action_type": "TOOL_EXECUTION",
-    "tool_name": "academic_query",
+    "tool_name": "search_job_status",
     "arguments": {
-      "student_id": "SV2026001"
+      "company": "Vingroup",
+      "student_id": "2A202602835"
     },
-    "observation": {},
-    "latency_ms": 799.12
+    "observation": {
+      "status": "SUCCESS",
+      "data": {
+        "job_id": "JOB-VINGROUP-001",
+        "role": "Data Analyst",
+        "current_status": "To Apply"
+      }
+    },
+    "latency_ms": 961.17
   },
   {
     "step": 2,
-    "query": "Hãy tra cứu thông tin học vụ của sinh viên SV2026001.",
+    "query": "Hãy tra cứu trạng thái hồ sơ ứng tuyển của tôi tại công ty Vingroup.\n\nObservation từ tool search_job_status: {\"status\": \"SUCCESS\", \"data\": {\"job_id\": \"JOB-VINGROUP-001\", \"role\": \"Data Analyst\", \"current_status\": \"To Apply\"}}\nHãy tiếp tục suy luận. Nếu đã đủ dữ liệu, trả lời bằng văn bản trực tiếp.",
     "action_type": "FINAL_ANSWER",
-    "thought": "Tổng hợp kết quả từ MCP Server thành công.",
-    "output": "Chưa thể trả lời chi tiết do chưa nhận được dữ liệu từ MCP Server (hãy hoàn thành TODO 2.1).",
+    "thought": "Đã nhận kết quả tra cứu và có thể trả lời trực tiếp.",
+    "output": "Hồ sơ Vingroup là vị trí Data Analyst, trạng thái hiện tại là To Apply.",
+    "latency_ms": 882.45
+  },
+  {
+    "step": 1,
+    "query": "Hãy đặt lịch phỏng vấn vị trí Data Analyst tại Vingroup vào lúc 14:00 ngày 18/09/2026.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "schedule_interview_calendar",
+    "arguments": {
+      "title": "Phỏng vấn Data Analyst - Vingroup",
+      "time": "2026-09-18T14:00:00"
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "event_link": "https://calendar.google.com/calendar/event?eid=mock_link",
+      "title": "Phỏng vấn Data Analyst - Vingroup",
+      "time": "2026-09-18T14:00:00"
+    },
+    "latency_ms": 829.37
+  },
+  {
+    "step": 2,
+    "query": "Hãy đặt lịch phỏng vấn vị trí Data Analyst tại Vingroup vào lúc 14:00 ngày 18/09/2026.\n\nObservation từ tool schedule_interview_calendar: {\"status\": \"SUCCESS\", \"event_link\": \"https://calendar.google.com/calendar/event?eid=mock_link\", \"title\": \"Phỏng vấn Data Analyst - Vingroup\", \"time\": \"2026-09-18T14:00:00\"}\nHãy tiếp tục suy luận. Nếu đã đủ dữ liệu, trả lời bằng văn bản trực tiếp.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Chuỗi xử lý ứng tuyển đã hoàn tất.",
+    "output": "Đã đặt lịch phỏng vấn Data Analyst tại Vingroup vào 14:00 ngày 18/09/2026.",
+    "latency_ms": 867.72
+  },
+  {
+    "step": 1,
+    "query": "Hãy xử lý hồ sơ ứng tuyển Data Analyst của tôi tại Vingroup: tra cứu trạng thái, chuyển hồ sơ sang Interviewing nếu phù hợp, rồi đặt lịch phỏng vấn lúc 14:00 ngày 18/09/2026.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "search_job_status",
+    "arguments": {
+      "company": "Vingroup",
+      "student_id": "2A202602835"
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "data": {
+        "job_id": "JOB-VINGROUP-001",
+        "role": "Data Analyst",
+        "current_status": "To Apply"
+      }
+    },
+    "latency_ms": 776.24
+  },
+  {
+    "step": 2,
+    "query": "Hãy xử lý hồ sơ ứng tuyển Data Analyst của tôi tại Vingroup: tra cứu trạng thái, chuyển hồ sơ sang Interviewing nếu phù hợp, rồi đặt lịch phỏng vấn lúc 14:00 ngày 18/09/2026.\n\nObservation từ tool search_job_status: {\"status\": \"SUCCESS\", \"data\": {\"job_id\": \"JOB-VINGROUP-001\", \"role\": \"Data Analyst\", \"current_status\": \"To Apply\"}}\nHãy tiếp tục suy luận. Nếu đã đủ dữ liệu, trả lời bằng văn bản trực tiếp.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "update_application_kanban",
+    "arguments": {
+      "job_id": "JOB-VINGROUP-001",
+      "status": "Interviewing"
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "message": "Job status updated to 'Interviewing'"
+    },
+    "latency_ms": 989.83
+  },
+  {
+    "step": 3,
+    "query": "Hãy xử lý hồ sơ ứng tuyển Data Analyst của tôi tại Vingroup: tra cứu trạng thái, chuyển hồ sơ sang Interviewing nếu phù hợp, rồi đặt lịch phỏng vấn lúc 14:00 ngày 18/09/2026.\n\nObservation từ tool update_application_kanban: {\"status\": \"SUCCESS\", \"message\": \"Job status updated to 'Interviewing'\"}\nHãy tiếp tục suy luận. Nếu đã đủ dữ liệu, trả lời bằng văn bản trực tiếp.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "schedule_interview_calendar",
+    "arguments": {
+      "title": "Phỏng vấn Data Analyst - Vingroup",
+      "time": "2026-09-18T14:00:00"
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "event_link": "https://calendar.google.com/calendar/event?eid=mock_link",
+      "title": "Phỏng vấn Data Analyst - Vingroup",
+      "time": "2026-09-18T14:00:00"
+    },
+    "latency_ms": 839.84
+  },
+  {
+    "step": 4,
+    "query": "Hãy xử lý hồ sơ ứng tuyển Data Analyst của tôi tại Vingroup: tra cứu trạng thái, chuyển hồ sơ sang Interviewing nếu phù hợp, rồi đặt lịch phỏng vấn lúc 14:00 ngày 18/09/2026.\n\nObservation từ tool schedule_interview_calendar: {\"status\": \"SUCCESS\", \"event_link\": \"https://calendar.google.com/calendar/event?eid=mock_link\", \"title\": \"Phỏng vấn Data Analyst - Vingroup\", \"time\": \"2026-09-18T14:00:00\"}\nHãy tiếp tục suy luận. Nếu đã đủ dữ liệu, trả lời bằng văn bản trực tiếp.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Chuỗi xử lý ứng tuyển đã hoàn tất.",
+    "output": "Đã cập nhật hồ sơ sang Interviewing và đặt lịch phỏng vấn Data Analyst tại Vingroup vào 14:00 ngày 18/09/2026.",
+    "latency_ms": 1032.58
+  },
+  {
+    "step": 1,
+    "query": "Hãy tra cứu trạng thái hồ sơ ứng tuyển của tôi tại công ty Không Tồn Tại.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "search_job_status",
+    "arguments": {
+      "company": "Không Tồn Tại",
+      "student_id": "2A202602835"
+    },
+    "observation": {
+      "status": "NOT_FOUND",
+      "message": "Không tìm thấy hồ sơ ứng tuyển của sinh viên 2A202602835 tại công ty Không Tồn Tại."
+    },
+    "latency_ms": 783.66
+  },
+  {
+    "step": 2,
+    "query": "Hãy tra cứu trạng thái hồ sơ ứng tuyển của tôi tại công ty Không Tồn Tại.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Dừng vì Tool trả về NOT_FOUND.",
+    "output": "Không tìm thấy hồ sơ ứng tuyển của sinh viên 2A202602835 tại công ty Không Tồn Tại.",
     "latency_ms": 10.0
   }
 ]

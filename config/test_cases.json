@@ -1,0 +1,37 @@
+[
+  {
+    "id": "TC01",
+    "type": "direct_query",
+    "question": "Chào bạn, bạn có thể giới thiệu cách trợ lý quản lý tiến độ ứng tuyển và lên lịch phỏng vấn hoạt động không?",
+    "expected_behavior": "Chatbot trả lời trực tiếp từ System Prompt, không cần gọi bất kỳ Tool nào.",
+    "complexity": "Low"
+  },
+  {
+    "id": "TC02",
+    "type": "single_tool_query",
+    "question": "Hãy tra cứu trạng thái hồ sơ ứng tuyển của tôi tại công ty Vingroup.",
+    "expected_behavior": "Agent tự động phát sinh Tool Call 'search_job_status' với company là 'Vingroup' và student_id là '2A202602835'.",
+    "complexity": "Medium"
+  },
+  {
+    "id": "TC03",
+    "type": "appointment_booking",
+    "question": "Hãy đặt lịch phỏng vấn vị trí Data Analyst tại Vingroup vào lúc 14:00 ngày 18/09/2026.",
+    "expected_behavior": "Agent tự động phát sinh Tool Call 'schedule_interview_calendar' với tiêu đề 'Phỏng vấn Data Analyst - Vingroup' và thời gian '2026-09-18T14:00:00'.",
+    "complexity": "Medium"
+  },
+  {
+    "id": "TC04",
+    "type": "multi_step_reasoning",
+    "question": "Hãy xử lý hồ sơ ứng tuyển Data Analyst của tôi tại Vingroup: tra cứu trạng thái, chuyển hồ sơ sang Interviewing nếu phù hợp, rồi đặt lịch phỏng vấn lúc 14:00 ngày 18/09/2026.",
+    "expected_behavior": "Agent thực hiện chuỗi suy luận ReAct: gọi 'search_job_status' với company 'Vingroup' và student_id '2A202602835', gọi 'update_application_kanban' cho job_id nhận được với status 'Interviewing', sau đó gọi 'schedule_interview_calendar' với đúng vai trò và thời gian.",
+    "complexity": "High"
+  },
+  {
+    "id": "TC05",
+    "type": "edge_case_handling",
+    "question": "Hãy tra cứu trạng thái hồ sơ ứng tuyển của tôi tại công ty Không Tồn Tại.",
+    "expected_behavior": "Agent nhận kết quả NOT_FOUND từ 'search_job_status' và phản hồi lịch sự, chính xác, không bịa đặt job_id hoặc trạng thái hồ sơ; đồng thời không tiếp tục cập nhật Kanban hay đặt lịch.",
+    "complexity": "Medium"
+  }
+]
